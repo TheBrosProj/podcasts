@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay,faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight, faArrowLeft, faPlay,faPlus,faAngleDown } from '@fortawesome/free-solid-svg-icons'
+import { eventNames } from 'process';
 
 export const Card = ({ title, image, description }) => {
   return (
@@ -10,20 +11,38 @@ export const Card = ({ title, image, description }) => {
         <h5 className="card-title">{title}</h5>
         <p className="card-text">{description}</p>
       </div>
-      <div className='play-button'>
+      <div className='card-buttons'>
         <FontAwesomeIcon icon={faPlay} />
         <FontAwesomeIcon icon={faPlus} />
+        <FontAwesomeIcon icon={faAngleDown} />
       </div>
     </div>
   );
 };
 
-const CardShowcase = ({ items }) => {
+const CardShowcase = ({ items , col }) => {
+  let [overflow,set_overflow] = useState(0)
+  const overflow_length = col
+  
+  const handleRightArrowClick = (event) => {
+    if(overflow < items.length - overflow_length)
+    set_overflow(overflow+overflow_length)
+};
+const handleLeftArrowClick = (event) => {
+  if(overflow >= overflow_length){
+  set_overflow(overflow-overflow_length)
+  }
+};
+
   return (
     <div className="card-showcase">
-      {items.map((item) => (
+      { overflow >= overflow_length ? <FontAwesomeIcon icon={faArrowLeft} className='left' onClick={handleLeftArrowClick}/> : ""}
+      <div className='cards-section'>
+      {items.slice(overflow,overflow+overflow_length).map((item) => (
         <Card key={item.id} {...item} />
       ))}
+      </div>
+      { overflow < items.length - overflow_length ?  <FontAwesomeIcon icon={faArrowRight} className='right' onClick={handleRightArrowClick}/> : ""}
     </div>
   );
 };

@@ -1,7 +1,8 @@
 import NavBar from '../components/navbar';
 import Player from '../components/player';
-import Recommended from '../components/reccomended';
+import {Recommended, TopPicks} from '../components/customcards';
 import SearchBar from '../components/search'
+import Footer from '../components/footer';
 
 const handleSearch = (searchTerm) => {
   alert("searched for "+searchTerm)
@@ -13,7 +14,9 @@ export default function Home() {
       <title>Podcasts</title>
       <NavBar></NavBar>
       <SearchBar onSearch={handleSearch} />
-      <Recommended></Recommended>
+      <TopPicks></TopPicks>
+      <Recommended userId={"1234"}></Recommended>
+      <Footer></Footer>
       <Player></Player>
     </main>
   )
