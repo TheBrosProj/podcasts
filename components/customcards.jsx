@@ -65,13 +65,13 @@ var items = [
 
 export const Recommended = ({active,userId}) => {
   const [data,SetData] = useState(items)
-  useEffect(() => {
-    const fetchData = async () => {
-      SetData(await getAllPodcasts());
-    };
-    fetchData();
-    console.log(data);
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     SetData(await getAllPodcasts());
+  //   };
+  //   fetchData();
+  //   console.log(data);
+  // }, []);
   return (
     <div className='custom_card'>
       <h1 className='heading'>Recommended</h1>
