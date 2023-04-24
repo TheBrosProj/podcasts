@@ -1,20 +1,19 @@
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import { auth } from '@/lib/firebase'
+import { useRouter } from 'next/router';
+import { useAuth } from '../hooks/useAuth';
 
-const Logout = () => {
-  const router = useRouter()
+export default function LogoutPage() {
+  const router = useRouter();
+  const auth = useAuth();
 
-  useEffect(() => {
-    const handleLogout = async () => {
-      await auth.signOut()
-      router.push('/')
-    }
+  const handleLogout = async () => {
+    await auth.signOut();
+    router.push('/login');
+  };
 
-    handleLogout()
-  }, [])
-
-  return null
+  return (
+    <div>
+      <h1>Logout</h1>
+      <button onClick={handleLogout}>Logout</button>
+    </div>
+  );
 }
-
-export default Logout

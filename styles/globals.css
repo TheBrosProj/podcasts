@@ -92,10 +92,6 @@ input {
     width: 35vw;
     font-size: 7vh;
   }
-  
-  .card-showcase {
-    display: inline-block;
-  }
 }
 
 .card img {
