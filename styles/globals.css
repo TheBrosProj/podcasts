@@ -28,7 +28,30 @@ html {
   border-radius: 2rem;
 }
 
-.search input {
+.form{
+  margin-top: 20vh;
+  align-items: center;
+  text-align: center;
+}
+
+.form label{
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.form input{
+  width: 20rem;
+}
+
+.form button {
+  margin: 1rem;
+  padding: 1rem 2rem;
+  outline: none;
+  border-radius: 24px;
+  border: 2px solid grey;
+}
+
+input {
   color: black;
   outline: 0;
   padding: 0.8rem 1rem;
@@ -56,19 +79,20 @@ html {
   text-shadow: 4px 4px 48px whitesmoke;
 }
 
+
 @media (min-width: 1100px) {
   .custom_card {
     display: flex;
     flex-direction: right;
     align-items: center;
   }
-
+  
   .heading {
     display: inline-block;
     width: 35vw;
     font-size: 7vh;
   }
-
+  
   .card-showcase {
     display: inline-block;
   }
@@ -148,6 +172,11 @@ html {
   border-radius: 12px;
 }
 
+@media (max-width: 800px){
+  .player img{
+    display: none;
+  }
+}
 .player svg {
   height: 6vh;
   width: 2vw;
@@ -172,8 +201,8 @@ html {
   margin: 1vw;
 }
 
-.player_info h4 {
-  margin-right: 5vw;
+.player_info h4,p {
+  margin: 0 2vw;
   font-weight: 700;
 }
 

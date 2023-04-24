@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faArrowLeft, faPlay,faPlus,faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { eventNames } from 'process';
-
+import TransitionDiv from '../components/transition';
 export const Card = ({ title, image, description }) => {
   return (
     <div className="card">
@@ -12,8 +12,8 @@ export const Card = ({ title, image, description }) => {
         <p className="card-text">{description}</p>
       </div>
       <div className='card-buttons'>
-        <FontAwesomeIcon icon={faPlay} />
         <FontAwesomeIcon icon={faPlus} />
+        <FontAwesomeIcon icon={faPlay} />
         <FontAwesomeIcon icon={faAngleDown} />
       </div>
     </div>
