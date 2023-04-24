@@ -62,7 +62,7 @@ const Login = () => {
           />
         </div>
         <button type="submit">Login</button>
-        <br></br>Don't have an account ?
+        <br></br>Dont have an account ?
       <Link role="button" className="fancy-button"href="/signup"><button>Sign Up</button></Link>or
       <button onClick={handleGoogleSignIn}>Sign in with Google</button>
       </form>
