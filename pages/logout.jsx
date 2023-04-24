@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../lib/useAuth';
 
 export default function LogoutPage() {
   const router = useRouter();
