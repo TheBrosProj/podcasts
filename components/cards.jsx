@@ -3,24 +3,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faArrowLeft, faPlay,faPlus,faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { eventNames } from 'process';
 import TransitionDiv from '../components/transition';
-export const Card = ({ title, image, description }) => {
+export const Card = ({ active,title,desc,aName,img }) => {
   return (
     <div className="card">
-      <img src={image} alt={title} />
+      <img src={img} alt={title} />
       <div className="card-body">
-        <h5 className="card-title">{title}</h5>
-        <p className="card-text">{description}</p>
+        <h5 className="card-title">{title} by {aName}</h5>
+        <p className="card-text">{desc}</p>
       </div>
       <div className='card-buttons'>
-        <FontAwesomeIcon icon={faPlus} />
-        <FontAwesomeIcon icon={faPlay} />
-        <FontAwesomeIcon icon={faAngleDown} />
+        {/* <FontAwesomeIcon icon={faPlus} /> */}
+        <FontAwesomeIcon icon={faPlay} onClick={()=>{active(_id)}}/>
+        {/* <FontAwesomeIcon icon={faAngleDown} /> */}
       </div>
     </div>
   );
 };
 
-const CardShowcase = ({ items , col }) => {
+const CardShowcase = ({active, items , col }) => {
   let [overflow,set_overflow] = useState(0)
   const overflow_length = col
   
@@ -39,7 +39,7 @@ const handleLeftArrowClick = (event) => {
       { overflow >= overflow_length ? <FontAwesomeIcon icon={faArrowLeft} className='left' onClick={handleLeftArrowClick}/> : ""}
       <div className='cards-section'>
       {items.slice(overflow,overflow+overflow_length).map((item) => (
-        <Card key={item.id} {...item} />
+        <Card active={active} key={(item._id).toString()} {...item} />
       ))}
       </div>
       { overflow < items.length - overflow_length ?  <FontAwesomeIcon icon={faArrowRight} className='right' onClick={handleRightArrowClick}/> : ""}

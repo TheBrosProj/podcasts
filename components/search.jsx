@@ -10,7 +10,7 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <form onSubmit={handleSearch} className='search'>
+    <form onChange={handleSearch} className='search'>
       <input
         type="text"
         placeholder="Search for podcasts"
