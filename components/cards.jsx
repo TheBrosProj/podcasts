@@ -1,49 +1,83 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight, faArrowLeft, faPlay,faPlus,faAngleDown } from '@fortawesome/free-solid-svg-icons'
-import { eventNames } from 'process';
+import { Box, Image, Heading, Text, Flex, IconButton } from '@chakra-ui/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import TransitionDiv from '../components/transition';
-export const Card = ({ active,title,desc,aName,img }) => {
+
+export const Card = ({ active, title, desc, aName, img }) => {
   return (
-    <div className="card">
-      <img src={img} alt={title} />
-      <div className="card-body">
-        <h5 className="card-title">{title} by {aName}</h5>
-        <p className="card-text">{desc}</p>
-      </div>
-      <div className='card-buttons'>
-        {/* <FontAwesomeIcon icon={faPlus} /> */}
-        <FontAwesomeIcon icon={faPlay} onClick={()=>{active(_id)}}/>
-        {/* <FontAwesomeIcon icon={faAngleDown} /> */}
-      </div>
-    </div>
+    <Box className="card" p="4" borderRadius="xl" boxShadow="md">
+      <Image src={img} alt={title} borderRadius="xl" />
+      <Box mt="4">
+        <Heading as="h5" size="md" fontWeight="bold">
+          {title} by {aName}
+        </Heading>
+        <Text mt="2" color="gray.600">
+          {desc}
+        </Text>
+      </Box>
+      <Flex mt="4" justifyContent="center">
+        <IconButton
+          aria-label="Play"
+          icon={<FontAwesomeIcon icon={faPlay} />}
+          variant="outline"
+          onClick={() => {
+            active(_id);
+          }}
+        />
+      </Flex>
+    </Box>
   );
 };
 
-const CardShowcase = ({active, items , col }) => {
-  let [overflow,set_overflow] = useState(0)
-  const overflow_length = col
-  
-  const handleRightArrowClick = (event) => {
-    if(overflow < items.length - overflow_length)
-    set_overflow(overflow+overflow_length)
-};
-const handleLeftArrowClick = (event) => {
-  if(overflow >= overflow_length){
-  set_overflow(overflow-overflow_length)
-  }
-};
+const CardShowcase = ({ active, items, col }) => {
+  let [overflow, setOverflow] = useState(0);
+  const overflowLength = col;
+
+  const handleRightArrowClick = () => {
+    if (overflow < items.length - overflowLength) setOverflow(overflow + overflowLength);
+  };
+
+  const handleLeftArrowClick = () => {
+    if (overflow >= overflowLength) {
+      setOverflow(overflow - overflowLength);
+    }
+  };
 
   return (
-    <div className="card-showcase">
-      { overflow >= overflow_length ? <FontAwesomeIcon icon={faArrowLeft} className='left' onClick={handleLeftArrowClick}/> : ""}
-      <div className='cards-section'>
-      {items.slice(overflow,overflow+overflow_length).map((item) => (
-        <Card active={active} key={(item._id).toString()} {...item} />
-      ))}
-      </div>
-      { overflow < items.length - overflow_length ?  <FontAwesomeIcon icon={faArrowRight} className='right' onClick={handleRightArrowClick}/> : ""}
-    </div>
+    <Box className="card-showcase" position="relative">
+      {overflow >= overflowLength && (
+        <IconButton
+          icon={<FontAwesomeIcon icon={faArrowLeft} />}
+          className="left"
+          borderRadius="50%"
+          position="absolute"
+          top="50%"
+          left="1vh"
+          p="1"
+          onClick={handleLeftArrowClick}
+        />
+      )}
+      <Flex className="cards-section" mt="8" justifyContent="flex-end" columnGap="1.5rem">
+        {items.slice(overflow, overflow + overflowLength).map((item) => (
+          <Card active={active} key={(item._id).toString()} {...item} />
+        ))}
+      </Flex>
+      {overflow < items.length - overflowLength && (
+        <IconButton
+          size="xs"
+          icon={<FontAwesomeIcon icon={faArrowRight} />}
+          className="right"
+          borderRadius="50%"
+          position="absolute"
+          top="50%"
+          right="1vh"
+          p="1"
+          onClick={handleRightArrowClick}
+        />
+      )}
+    </Box>
   );
 };
 

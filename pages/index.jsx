@@ -1,16 +1,18 @@
+import { useState, useEffect } from 'react';
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import NavBar from '../components/navbar';
 import Player from '../components/player';
 import SearchBar from '../components/search';
-import { useState,useEffect } from 'react';
-import {Recommended, TopPicks , LibreVox} from '../components/customcards';
-import { Files,searchByName,getAudio } from '../lib/db'
+import { Recommended, TopPicks, LibreVox } from '../components/customcards';
+import { Files, searchByName, getAudio } from '../lib/db';
 import Footer from '../components/footer';
 import { useAuth } from '../lib/useAuth';
 
 export default function Home() {
-  const [activeId,SetActiveId] = useState(0)
+  const [activeId, setActiveId] = useState(0);
   const [audio, setAudio] = useState(0);
   console.log(useAuth().authUser);
+
   useEffect(() => {
     const fetchData = async () => {
       const data = await Files();
@@ -22,16 +24,18 @@ export default function Home() {
     };
     fetchData();
   }, []);
+
   return (
-    <main>
-      <title>Podcasts</title>
-      <NavBar></NavBar>
-      <SearchBar onSearch={console.log} />
-      <TopPicks  active={SetActiveId} ></TopPicks>
-      <Recommended active={SetActiveId} userId={"UID"}></Recommended>
-      {/* <LibreVox></LibreVox> */}
-      <Footer></Footer>
-      <Player audio={{audio}}></Player>
-    </main>
-  )
+    <Box>
+      <Flex direction="column" minHeight="100vh">
+        <NavBar />
+        <SearchBar onSearch={console.log} />
+        <TopPicks active={setActiveId} />
+        <Recommended active={setActiveId} userId={"UID"} />
+        {/* <LibreVox /> */}
+        <Footer />
+      </Flex>
+      <Player audio={{ audio }} />
+    </Box>
+  );
 }
