@@ -4,11 +4,12 @@ import 'firebase/firestore';
 import 'firebase/storage';
 import axios from 'axios';
 
-async function sendData(data) {
-  const response = await axios.post('http://localhost:3000/myRoute', data);
-  const responseData = response.data;
-  // ...
-}
+// GridFS Testing
+// async function sendData(data) {
+//   const response = await axios.post('http://localhost:300/myRoute', data);
+//   const responseData = response.data;
+//   // ...
+// }
 
 export default function UploadForm() {
   const [file, setFile] = useState(null);
@@ -26,7 +27,7 @@ export default function UploadForm() {
 
   const handleUpload = async () => {
     const data = {title,artist,image:imageUrl,description}
-    const response = await axios.post('http://localhost:5000/add', data);
+    const response = await axios.post('/api/addPodcast', data);
     console.log(response);
   };
 
@@ -34,11 +35,11 @@ export default function UploadForm() {
     if (!id) return;
 
     // Get podcast information from Firestore (Need to change this to mongodb server)
-    const docRef = firebase.firestore().collection('podcasts').doc(id);
-    const doc = await docRef.get();
-    if (doc.exists) {
-      setPodcast(doc.data());
-    }
+    // const docRef = firebase.firestore().collection('podcasts').doc(id);
+    // const doc = await docRef.get();
+    // if (doc.exists) {
+    //   setPodcast(doc.data());
+    // }
   };
 
   return (
