@@ -33,7 +33,9 @@ export default function UploadForm() {
 
   const handleGetPodcast = async () => {
     if (!id) return;
-
+    const response = await axios.post('/api/searchPodcasts', {searchTerm:id});
+    console.log(response.data);
+    // setPodcast(response.data[0])
     // Get podcast information from Firestore (Need to change this to mongodb server)
     // const docRef = firebase.firestore().collection('podcasts').doc(id);
     // const doc = await docRef.get();
