@@ -2,17 +2,18 @@ import { getAllPodcasts } from '../lib/db';
 import CardShowcase from './cards';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Box, Heading, SimpleGrid } from '@chakra-ui/react';
 
 var items = [
   {
     _id: 1,
-    title: 'Card 1',aName : 'Nandan Varma',
+    title: 'Card 1', aName: 'Nandan Varma',
     img: 'https://picsum.photos/200',
     desc: 'This is the first card',
   },
   {
     _id: 2,
-    title: 'Card 2',aName : 'Nandan Varma',
+    title: 'Card 2', aName: 'Nandan Varma',
     img: 'https://picsum.photos/200',
     desc: 'This is the second card',
   },
@@ -27,7 +28,7 @@ var items = [
     title: 'Card 4',
     img: 'https://picsum.photos/200',
     desc: 'This is the second card',
-  },  {
+  }, {
     _id: 5,
     title: 'Card 5',
     img: 'https://picsum.photos/200',
@@ -38,7 +39,7 @@ var items = [
     title: 'Card 6',
     img: 'https://picsum.photos/200',
     desc: 'This is the second card',
-  },  {
+  }, {
     _id: 7,
     title: 'Card 7',
     img: 'https://picsum.photos/200',
@@ -49,7 +50,7 @@ var items = [
     title: 'Card 8',
     img: 'https://picsum.photos/200',
     desc: 'This is the second card',
-  },  {
+  }, {
     _id: 9,
     title: 'Card 9',
     img: 'https://picsum.photos/200',
@@ -61,37 +62,67 @@ var items = [
     img: 'https://picsum.photos/200',
     desc: 'This is the second card',
   },
+  {
+    _id: 11,
+    title: 'Card 11',
+    img: 'https://picsum.photos/200',
+    desc: 'This is the first card',
+  },
+  {
+    _id: 12,
+    title: 'Card 12',
+    img: 'https://picsum.photos/200',
+    desc: 'This is the second card',
+  }, {
+    _id: 13,
+    title: 'Card 13',
+    img: 'https://picsum.photos/200',
+    desc: 'This is the first card',
+  },
+  {
+    _id: 14,
+    title: 'Card 14',
+    img: 'https://picsum.photos/200',
+    desc: 'This is the second card',
+  }, {
+    _id: 15,
+    title: 'Card 15',
+    img: 'https://picsum.photos/200',
+    desc: 'This is the first card',
+  },
 ];
 
+export const Recommended = ({ active, userId }) => {
+  const [data, setData] = useState(items);
 
-export const Recommended = ({active,userId}) => {
-  const [data,SetData] = useState(items)
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     SetData(await getAllPodcasts());
-  //   };
-  //   fetchData();
-  //   console.log(data);
-  // }, []);
+  useEffect(() => {
+    // Fetch data here if needed
+  }, []);
+
   return (
-    <div className='custom_card'>
-      <h1 className='heading'>Recommended</h1>
+    <Box>
+      <Heading textAlign="center" as="h1" size="xl" mt={"4"}>
+        Recommended
+      </Heading>
       <CardShowcase active={active} items={data} col={3} />
-    </div>
+    </Box>
   );
 };
 
-export const TopPicks = ({active}) => {
+export const TopPicks = ({ active }) => {
   return (
-    <div className='custom_card'>
-      <h1 className='heading'>Top Picks</h1>
+    <Box>
+      <Heading textAlign="center" as="h1" size="xl" mt={'4'}>
+        Top Picks
+      </Heading>
       <CardShowcase active={active} items={items} col={3} />
-    </div>
+    </Box>
   );
-}
+};
 
 export const LibreVox = () => {
-  const [LibreData,SetLibreData] = useState(items)
+  const [libreData, setLibreData] = useState(items);
+
   useEffect(() => {
     fetch('https://librivox.org/api/feed/audiobooks?since=0&extended=1&limit=5&format=json')
       .then(response => response.json())
@@ -101,17 +132,18 @@ export const LibreVox = () => {
           name: book.title,
           desc: book.description,
           aName: book.authors[0].first_name + ' ' + book.authors[0].last_name,
-          img: book.url_image
+          img: book.url_image,
         }));
-        SetLibreData(formattedData);
+        setLibreData(formattedData);
       });
   }, []);
-  return (
-    <div className='custom_card'>
-      <h1 className='heading'>LibreVox Hits</h1>
-      <CardShowcase items={LibreData} col={3} />
-    </div>
-  );
-}
 
-export default Recommended;
+  return (
+    <Box>
+      <Heading textAlign="center" as="h1" size="xl">
+        LibreVox Hits
+      </Heading>
+      <CardShowcase items={libreData} col={3} />
+    </Box>
+  );
+};

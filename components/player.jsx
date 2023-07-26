@@ -1,89 +1,96 @@
-import React, { useState, useEffect , useRef } from 'react';
+import React, { useState, useRef } from 'react';
+import { Box, IconButton, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Flex, Text } from '@chakra-ui/react';
+import { faPlay, faPause, faUndoAlt, faRedoAlt, faVolumeDown, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faPlay,
-  faPause,
-  faStepBackward,
-  faStepForward,
-  faVolumeHigh,
-  faVolumeMute,
-} from '@fortawesome/free-solid-svg-icons';
-import { Files, getAudio } from '../lib/db';
 
-function getTime(seconds) {
-  var s = new Date(seconds * 1000).toISOString().substring(14, 19);
-  return s;
-}
-
-const Player = ({ audio }) => {
-
-
-  const [playing, setPlaying] = useState(false);
-  const [volume, setVolume] = useState(50);
-  const [position, setPosition] = useState(0);
-  const duration = audio?.duration || 0;
-  const intervalRef = useRef(null);
-
-  const handleVolumeChange = (event) => {
-    const newVolume = event.target.value;
-    setVolume(newVolume);
-    audio.volume = newVolume / 100;
-  };
-
-  const handlePositionChange = (event) => {
-    const newPosition = event.target.value;
-    setPosition(newPosition);
-    audio.currentTime = newPosition;
-  };
+const AudioPlayer = () => {
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(100);
+  const [speed, setSpeed] = useState(1);
 
   const handlePlayPause = () => {
-    if (playing) {
-      audio.pause();
-      setPlaying(false);
-      clearInterval(intervalRef.current);
+    if (isPlaying) {
+      audioRef.current.pause();
     } else {
-      audio.play();
-      setPlaying(true);
-      intervalRef.current = setInterval(() => {
-        setPosition(audio.currentTime);
-      }, 100);
+      audioRef.current.play();
     }
+    setIsPlaying(!isPlaying);
   };
 
-  const handleStop = () => {
-    audio.pause();
-    audio.currentTime = 0;
-    setPlaying(false);
-    setPosition(0);
-    clearInterval(intervalRef.current);
+  const handleBackward = () => {
+    audioRef.current.currentTime -= 10;
+  };
+
+  const handleForward = () => {
+    audioRef.current.currentTime += 10;
+  };
+
+  const handleTimeSeek = (value) => {
+    audioRef.current.currentTime = value;
+  };
+
+  const handleVolumeSeek = (value) => {
+    audioRef.current.volume = value / 100;
+    setVolume(value);
+  };
+
+  const handleTimeUpdate = () => {
+    setCurrentTime(audioRef.current.currentTime);
+  };
+
+  const handleDurationChange = () => {
+    setDuration(audioRef.current.duration);
+  };
+
+  const handleSpeedChange = (newSpeed) => {
+    audioRef.current.playbackRate = newSpeed;
+    setSpeed(newSpeed);
   };
 
   return (
-    <div className="player">
-      <div className="player_info">
-        <img src="https://i.scdn.co/image/ab67616d0000b273e8b066f70c206551210d902b" alt="album cover" />
-        <div className="player__songInfo">
-          <h4>Yeah!</h4>
-          <p>Usher</p>
-        </div>
-      </div>
-      <div className="player_duration">
-        {getTime(position)}
-        <input type="range" min="0" max={duration} value={position} onChange={handlePositionChange} />
-        {getTime(duration)}
-      </div>
-      <div className="player_controls">
-        <FontAwesomeIcon icon={faStepBackward} />
-        <FontAwesomeIcon icon={playing ? faPause : faPlay} onClick={handlePlayPause} />
-        <FontAwesomeIcon icon={faStepForward} />
-        {/* <FontAwesomeIcon icon={faStop} onClick={handleStop} /> */}
-      </div>
-      <div className="player_volume">
-        <FontAwesomeIcon icon={faVolumeHigh} />
-        <input type="range" min="0" max="100" value={volume} onChange={handleVolumeChange} />
-      </div>
-    </div>
+    <Box bg="gray.200" p={4} position="fixed" bottom={0} left={0} right={0}>
+      <audio
+        ref={audioRef}
+        src="@/public/hello.m4a"
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleDurationChange}
+      />
+      <Flex align="center" justify="space-between">
+        <IconButton icon={<FontAwesomeIcon icon={faUndoAlt} />} aria-label="Backward 10s" onClick={handleBackward} />
+        <IconButton icon={isPlaying ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />} aria-label={isPlaying ? 'Pause' : 'Play'} onClick={handlePlayPause} />
+        <IconButton icon={<FontAwesomeIcon icon={faRedoAlt} />} aria-label="Forward 10s" onClick={handleForward} />
+      </Flex>
+      <Flex align="center" justify="space-between" mt={2}>
+        <Text>{formatTime(currentTime)}</Text>
+        <Slider flex={1} value={currentTime} max={duration} onChange={handleTimeSeek}>
+          <SliderTrack>
+            <SliderFilledTrack bg="blue.500" />
+          </SliderTrack>
+          <SliderThumb boxSize={6} />
+        </Slider>
+        <Text>{formatTime(duration)}</Text>
+      </Flex>
+      <Flex align="center" mt={2}>
+        <IconButton icon={<FontAwesomeIcon icon={faVolumeDown} />} aria-label="Volume Down" />
+        <Slider flex={1} value={volume} onChange={handleVolumeSeek}>
+          <SliderTrack>
+            <SliderFilledTrack bg="blue.500" />
+          </SliderTrack>
+          <SliderThumb boxSize={6} />
+        </Slider>
+        <IconButton icon={<FontAwesomeIcon icon={faVolumeUp} />} aria-label="Volume Up" />
+      </Flex>
+    </Box>
   );
 };
 
-export default Player;
+const formatTime = (seconds) => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = Math.floor(seconds % 60);
+  return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+};
+
+export default AudioPlayer;

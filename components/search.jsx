@@ -1,55 +1,72 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import { Box, InputGroup, Input, InputRightElement, IconButton, Center, Heading, Text } from '@chakra-ui/react';
+import axios from 'axios';
+import CardShowcase from './cards';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCqQ140AoimlkJT-_MlyKWTDSAo2bhATRY",
-  authDomain: "softskills-puzzle.firebaseapp.com",
-  databaseURL: "https://softskills-puzzle-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "softskills-puzzle",
-  storageBucket: "softskills-puzzle.appspot.com",
-  messagingSenderId: "975338090757",
-  appId: "1:975338090757:web:52f97f79f417c85f48c76c",
-  measurementId: "G-9E332KQK57"
-};
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+const SearchBar = ({ active }) => {
+  const [searchTerm, SetSearchTerm] = useState("")
+  const [searchResults, SetSearchResults] = useState([])
+  let data = []
+  const handleSearch = async (value) => {
+    const response = await axios.post('/api/searchPodcasts', { searchTerm: value });
+    data = response.data
+    console.log(response.data);
+    console.log(searchTerm);
+    SetSearchResults(data.map(result => ({
+      _id: result._id,
+      title: result.title,
+      desc: result.description,
+      aName: result.artist,
+      img: result.image,
+    })));
+  }
 
 
-const SearchBar = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+  useEffect(() => {
+    handleSearch(searchTerm);
+  }, [searchTerm]);
 
-  const handleSearch = async (event) => {
-    event.preventDefault();
-
-    // search for audio files that match the search term
-    const querySnapshot = await firebase.firestore().collection('audioFiles')
-      .where('title', '>=', searchTerm)
-      .where('title', '<=', searchTerm + '\uf8ff')
-      .get();
-
-    // extract the audio files from the query snapshot
-    const audioFiles = querySnapshot.docs.map((doc) => doc.data());
-
-    onSearch(audioFiles);
-  };
 
   return (
-    <form onSubmit={handleSearch} className='search'>
-      <input
-        type="text"
-        placeholder="Search for podcasts"
-        value={searchTerm}
-        onChange={(event) => setSearchTerm(event.target.value)}
-      />
-      <button type="submit">
-        <FontAwesomeIcon icon={faMagnifyingGlass} />
-      </button>
-    </form>
+    <>
+      <Center ml={'4'}>
+        <Box position="relative" width="lg" mt="4" mr="4">
+          <form>
+            <InputGroup>
+              <Input
+                type="text"
+                placeholder="Search for podcasts"
+                value={searchTerm}
+                onChange={(event) => SetSearchTerm(event.target.value)}
+              />
+              <InputRightElement width="4.5rem">
+                <IconButton
+                  h="1.75rem"
+                  size="sm"
+                  type="submit"
+                  aria-label="Search"
+                  icon={<FontAwesomeIcon icon={faMagnifyingGlass} />}
+                />
+              </InputRightElement>
+            </InputGroup>
+          </form>
+        </Box>
+      </Center>
+      {searchTerm !== "" &&
+        <Box>
+          <Heading textAlign="center" as="h1" size="xl" mt={'4'}>
+            Search Results
+          </Heading>
+          {searchResults.length !== 0 ?
+          <CardShowcase items={searchResults} col={3} />
+          : <Center h={'md'}><Text fontSize={'lg'}>No Results Found</Text></Center>  
+        }
+        </Box>
+      }
+    </>
   );
 };
 
-export default SearchBar;
+export default SearchBar;
