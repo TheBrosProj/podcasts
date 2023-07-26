@@ -4,8 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faArrowLeft, faPlay } from '@fortawesome/free-solid-svg-icons';
 import TransitionDiv from '../components/transition';
 import Head from 'next/head';
+import { useAudioPlayer } from './AudioPlayerContext';
 
-export const Card = ({ active, _id, title, desc, aName, img }) => {
+
+export const Card = ({ _id, title, desc, aName, img }) => {
+  const { setActiveId } = useAudioPlayer();
   return (
     <Box
     pos={'relative'}
@@ -39,7 +42,7 @@ export const Card = ({ active, _id, title, desc, aName, img }) => {
           bg="gray.200"
           color="gray.600"
           fontSize="lg"
-          onClick={() => active(_id)}
+          onClick={() => setActiveId(_id)}
         />
       </Box>
     </Box>
@@ -107,7 +110,7 @@ const CardShowcase = ({ active, items, col }) => {
       />
       <Box display="flex" flexDirection="row" columnGap="1.5rem" margin="16">
         {sortedItems.slice(overflow, overflow + overflow_length).map((item) => (
-          <Card active={active} key={(item._id).toString()} {...item} />
+          <Card key={(item._id).toString()} {...item} />
         ))}
       </Box>
     </Box>

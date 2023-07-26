@@ -21,6 +21,7 @@
     "axios": "^1.4.0",
     "eslint": "^8.38.0",
     "eslint-config-next": "^13.3.0",
+    "file-loader": "^6.2.0",
     "firebase": "^8.10.1",
     "framer-motion": "^10.13.1",
     "mongoose": "^7.4.0",

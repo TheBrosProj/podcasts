@@ -2,13 +2,48 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Box, IconButton, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Flex, Text } from '@chakra-ui/react';
 import { faPlay, faPause, faUndoAlt, faRedoAlt, faVolumeDown, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useAudioPlayer } from './AudioPlayerContext';
+import { useRouter } from 'next/router';
+import test_audio from '@/public/Hello.m4a'
 
-const AudioPlayer = ({active}) => {
+const AudioPlayer = () => {
   const audioRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(100);
+  const router = useRouter();
+  const {
+    isPlaying,
+    setIsPlaying,
+    isLoaded,
+    setIsLoaded,
+    currentTime,
+    setCurrentTime,
+    duration,
+    setDuration,
+    volume,
+    setVolume,
+    picture,
+    title,
+    artist,
+    active,
+  } = useAudioPlayer();
+
+  useEffect(() => {
+    // Handle pausing and resuming audio when navigating between pages
+    const handleRouteChange = () => {
+      if (isPlaying && isLoaded) {
+        audioRef.current.pause();
+      }
+    };
+
+    router.events.on('routeChangeStart', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange);
+    };
+  }, [isPlaying, isLoaded, router]);
+  // const [isPlaying, setIsPlaying] = useState(false);
+  // const [currentTime, setCurrentTime] = useState(0);
+  // const [duration, setDuration] = useState(0);
+  // const [volume, setVolume] = useState(100);
 
   const handlePlayPause = () => {
     if (isPlaying) {
@@ -21,7 +56,7 @@ const AudioPlayer = ({active}) => {
   };
 
   useEffect(()=>{
-    console.log("selected");
+    console.log(active);
   },[active])
 
   const handleBackward = () => {
@@ -54,7 +89,7 @@ const AudioPlayer = ({active}) => {
     <Box bg="gray.200" p={4} position="fixed" bottom={0} left={0} right={0}>
       <audio
         ref={audioRef}
-        src="../hello.m4a"
+        src={'../Hello.m4a'}
         onTimeUpdate={handleTimeUpdate}
       />
       <Flex align="center" justify="space-between">

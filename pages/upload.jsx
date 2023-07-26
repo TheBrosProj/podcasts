@@ -58,7 +58,6 @@ export default function UploadForm() {
   };
 
   return (
-    <ChakraProvider>
     <Center minHeight="100vh">
       <Box width="400px" p={4} borderWidth="1px" borderRadius="lg">
         <Heading as="h1" mb={4}>
@@ -114,6 +113,5 @@ export default function UploadForm() {
         )}
       </Box>
     </Center>
-    </ChakraProvider>
   );
 }

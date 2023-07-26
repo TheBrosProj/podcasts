@@ -92,7 +92,7 @@ var items = [
   },
 ];
 
-export const Recommended = ({ active, userId }) => {
+export const Recommended = ({ userId }) => {
   const [data, setData] = useState(items);
 
   useEffect(() => {
@@ -104,7 +104,7 @@ export const Recommended = ({ active, userId }) => {
       <Heading textAlign="center" as="h1" size="xl" mt={"4"}>
         Recommended
       </Heading>
-      <CardShowcase active={active} items={data} col={3} />
+      <CardShowcase items={data} col={3} />
     </Box>
   );
 };
@@ -115,7 +115,7 @@ export const TopPicks = ({ active }) => {
       <Heading textAlign="center" as="h1" size="xl" mt={'4'}>
         Top Picks
       </Heading>
-      <CardShowcase active={active} items={items} col={3} />
+      <CardShowcase items={items} col={3} />
     </Box>
   );
 };
