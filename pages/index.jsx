@@ -8,7 +8,7 @@ import Footer from '../components/footer';
 import { useAuth } from '../lib/useAuth';
 
 export default function Home() {
-  const [activeId,SetActiveId] = useState(0)
+  const [activeId,SetActiveId] = useState(0);
   const [audio, setAudio] = useState(0);
   console.log(useAuth().authUser);
   useEffect(() => {

@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       // Insert the podcast data into the collection
       const result = await podcastCollection.insertOne({ title, artist, image, description });
 
-      res.status(200).json({ message: 'Podcast added successfully' });
+      res.status(200).json({ message: 'podcast uploaded successfully' });
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: 'An error occurred while saving the podcast data' });
