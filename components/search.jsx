@@ -12,8 +12,6 @@ const SearchBar = ({ active }) => {
   const handleSearch = async (value) => {
     const response = await axios.post('/api/searchPodcasts', { searchTerm: value });
     data = response.data
-    console.log(response.data);
-    console.log(searchTerm);
     SetSearchResults(data.map(result => ({
       _id: result._id,
       title: result.title,

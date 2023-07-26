@@ -32,7 +32,6 @@ export default function UploadForm() {
   const handleUpload = async () => {
     const data = { title, artist, image: imageUrl, description };
     const response = await axios.post('/api/addPodcast', data);
-    console.log(response);
     if(response.status == 200){
     toast({
       title: 'Success',

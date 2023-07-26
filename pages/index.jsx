@@ -5,11 +5,15 @@ import { useState, useEffect } from 'react';
 import { Recommended, TopPicks } from '../components/customcards';
 import Footer from '../components/footer';
 import { useAuth } from '../lib/useAuth';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, Text } from '@chakra-ui/react';
+import Link from 'next/link';
 
 export default function Home() {
   const [activeId, SetActiveId] = useState(0);
-  console.log(useAuth().authUser);
+  useEffect(() => {
+    console.log(activeId);
+  },[activeId]);
+  // console.log(useAuth().authUser);
   return (
     <ChakraProvider>
       <main>
@@ -17,10 +21,11 @@ export default function Home() {
         <NavBar></NavBar>
         <SearchBar/>
         <TopPicks active={SetActiveId} ></TopPicks>
+        <Text align={'center'}><Link href={'/upload'}>Temporary Upload Link</Link></Text>
         <Recommended active={SetActiveId} userId={"UID"}></Recommended>
         {/* <LibreVox></LibreVox> */}
-        {/* <Footer></Footer>
-        <Player></Player> */}
+        <Footer></Footer>
+        <Player active={activeId}></Player>
       </main>
     </ChakraProvider>
   )

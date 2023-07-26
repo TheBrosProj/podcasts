@@ -7,19 +7,25 @@ import Link from 'next/link';
 export default function NavBar() {
     return (
         <>
-            <Flex className='navbar' alignItems="center" px="2rem" py="0.5rem" h="5rem">
-                <Link href="/">
-                    <IconButton
-                        icon={<FontAwesomeIcon href='/' icon={faPodcast} />}
-                        color="grey"
-                        fontSize="xl"
-                        aria-label="Podcasts"
-                        _hover={{ color: 'black' }}
-                    />
-                </Link>
-                <Box ml="1rem" fontSize="2xl" fontWeight="bold" color="black">
-                    Podcasts
-                </Box>
+            <Flex align={'center'} justify={'space-between'} >
+                <Flex alignItems="center" px="2rem" py="0.5rem" h="5rem">
+                    <Link href="/">
+                        <IconButton
+                            icon={<FontAwesomeIcon href='/' icon={faPodcast} />}
+                            color="grey"
+                            fontSize="xl"
+                            aria-label="Podcasts"
+                            _hover={{ color: 'black' }}
+                        />
+                    </Link>
+                    <Box ml="1rem" fontSize="2xl" fontWeight="bold" color="black">
+                        Podcasts
+                    </Box>
+                </Flex>
+                <Flex>
+                    <Button mr={'4'}>Log In</Button>
+                    <Button mr={'4'}>Sign Up</Button>
+                </Flex>
             </Flex>
         </>
     );

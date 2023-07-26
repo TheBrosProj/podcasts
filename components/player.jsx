@@ -1,15 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Box, IconButton, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Flex, Text } from '@chakra-ui/react';
 import { faPlay, faPause, faUndoAlt, faRedoAlt, faVolumeDown, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const AudioPlayer = () => {
+const AudioPlayer = ({active}) => {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(100);
-  const [speed, setSpeed] = useState(1);
 
   const handlePlayPause = () => {
     if (isPlaying) {
@@ -18,7 +17,12 @@ const AudioPlayer = () => {
       audioRef.current.play();
     }
     setIsPlaying(!isPlaying);
+    handleDurationChange();
   };
+
+  useEffect(()=>{
+    console.log("selected");
+  },[active])
 
   const handleBackward = () => {
     audioRef.current.currentTime -= 10;
@@ -43,20 +47,15 @@ const AudioPlayer = () => {
 
   const handleDurationChange = () => {
     setDuration(audioRef.current.duration);
-  };
-
-  const handleSpeedChange = (newSpeed) => {
-    audioRef.current.playbackRate = newSpeed;
-    setSpeed(newSpeed);
+    console.log("Changed");
   };
 
   return (
     <Box bg="gray.200" p={4} position="fixed" bottom={0} left={0} right={0}>
       <audio
         ref={audioRef}
-        src="@/public/hello.m4a"
+        src="../hello.m4a"
         onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleDurationChange}
       />
       <Flex align="center" justify="space-between">
         <IconButton icon={<FontAwesomeIcon icon={faUndoAlt} />} aria-label="Backward 10s" onClick={handleBackward} />
@@ -64,24 +63,24 @@ const AudioPlayer = () => {
         <IconButton icon={<FontAwesomeIcon icon={faRedoAlt} />} aria-label="Forward 10s" onClick={handleForward} />
       </Flex>
       <Flex align="center" justify="space-between" mt={2}>
-        <Text>{formatTime(currentTime)}</Text>
+        <Text mr={4}>{formatTime(currentTime)}</Text>
         <Slider flex={1} value={currentTime} max={duration} onChange={handleTimeSeek}>
           <SliderTrack>
             <SliderFilledTrack bg="blue.500" />
           </SliderTrack>
           <SliderThumb boxSize={6} />
         </Slider>
-        <Text>{formatTime(duration)}</Text>
+        <Text ml={6}>{formatTime(duration)}</Text>
       </Flex>
       <Flex align="center" mt={2}>
-        <IconButton icon={<FontAwesomeIcon icon={faVolumeDown} />} aria-label="Volume Down" />
+        <IconButton mr={4} icon={<FontAwesomeIcon icon={faVolumeDown} />} aria-label="Volume Down" />
         <Slider flex={1} value={volume} onChange={handleVolumeSeek}>
           <SliderTrack>
             <SliderFilledTrack bg="blue.500" />
           </SliderTrack>
           <SliderThumb boxSize={6} />
         </Slider>
-        <IconButton icon={<FontAwesomeIcon icon={faVolumeUp} />} aria-label="Volume Up" />
+        <IconButton ml={4} icon={<FontAwesomeIcon icon={faVolumeUp} />} aria-label="Volume Up" />
       </Flex>
     </Box>
   );

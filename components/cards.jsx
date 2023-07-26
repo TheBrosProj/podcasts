@@ -5,7 +5,7 @@ import { faArrowRight, faArrowLeft, faPlay } from '@fortawesome/free-solid-svg-i
 import TransitionDiv from '../components/transition';
 import Head from 'next/head';
 
-export const Card = ({ active, title, desc, aName, img }) => {
+export const Card = ({ active, _id, title, desc, aName, img }) => {
   return (
     <Box
     pos={'relative'}
@@ -57,7 +57,6 @@ const CardShowcase = ({ active, items, col }) => {
     useEffect(()=>{
       canScrollLeft = overflow >= overflow_length;
       canScrollRight = overflow < sortedItems.length - overflow_length;
-      console.log(canScrollLeft);
     },[overflow])
   
   const handleRightArrowClick = (event) => {
@@ -69,9 +68,13 @@ const CardShowcase = ({ active, items, col }) => {
   };
 
   const [isLargeScreen] = useMediaQuery('(min-width: 1200px)')
+  const [isSmallScreen] = useMediaQuery('(max-width: 500px)')
 
   if(isLargeScreen){
     overflow_length=5;
+  }
+  if(isSmallScreen){
+    overflow_length=1;
   }
 
   return (
@@ -86,7 +89,7 @@ const CardShowcase = ({ active, items, col }) => {
         isDisabled={!canScrollLeft}
         position="absolute"
         top="50%"
-        left="1vh"
+        left="2"
         transform="translateY(-50%)"
       />
       <IconButton
@@ -99,7 +102,7 @@ const CardShowcase = ({ active, items, col }) => {
         isDisabled={!canScrollRight}
         position="absolute"
         top="50%"
-        right="1vh"
+        right="2"
         transform="translateY(-50%)"
       />
       <Box display="flex" flexDirection="row" columnGap="1.5rem" margin="16">
