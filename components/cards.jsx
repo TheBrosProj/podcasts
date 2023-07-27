@@ -2,28 +2,24 @@ import { useEffect, useState } from 'react';
 import { Box, Image, Heading, Text, Flex, IconButton, useMediaQuery } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faArrowLeft, faPlay } from '@fortawesome/free-solid-svg-icons';
-import TransitionDiv from '@/components/transition';
-import Head from 'next/head';
 import { useAudioPlayer } from './AudioPlayerContext';
-
 
 export const Card = ({ _id, title, desc, aName, img }) => {
   const { setActiveId } = useAudioPlayer();
   return (
     <Box
-    pos={'relative'}
+      pos={'relative'}
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
       boxShadow="md"
-      transition="0.3s"
       w="xs"
       h="md"
     >
       <Image w={'sm'} src={img} alt={title} borderRadius="lg" />
       <Box p="2">
         <Heading as="h5" size="md" mb="2">
-          {title} 
+          {title}
         </Heading>
         <Heading as="h6" size={'sm'}>
 
@@ -35,8 +31,8 @@ export const Card = ({ _id, title, desc, aName, img }) => {
       </Box>
       <Box display="flex" justifyContent="center" alignItems="center">
         <IconButton
-        position={'absolute'}
-        bottom={'4'}
+          position={'absolute'}
+          bottom={'4'}
           icon={<FontAwesomeIcon icon={faPlay} />}
           borderRadius="50%"
           bg="gray.200"
@@ -50,18 +46,17 @@ export const Card = ({ _id, title, desc, aName, img }) => {
 };
 
 const CardShowcase = ({ active, items, col }) => {
-  // Sort the items based on _id to keep them in order
   const sortedItems = items.slice().sort((a, b) => a._id - b._id);
   let [overflow, setOverflow] = useState(0);
   let overflow_length = col;
   let canScrollRight = overflow < sortedItems.length - overflow_length;
   let canScrollLeft = overflow >= overflow_length;
-  
-    useEffect(()=>{
-      canScrollLeft = overflow >= overflow_length;
-      canScrollRight = overflow < sortedItems.length - overflow_length;
-    },[overflow])
-  
+
+  useEffect(() => {
+    canScrollLeft = overflow >= overflow_length;
+    canScrollRight = overflow < sortedItems.length - overflow_length;
+  }, [overflow])
+
   const handleRightArrowClick = (event) => {
     if (canScrollRight) setOverflow(overflow + overflow_length);
   };
@@ -73,11 +68,11 @@ const CardShowcase = ({ active, items, col }) => {
   const [isLargeScreen] = useMediaQuery('(min-width: 1200px)')
   const [isSmallScreen] = useMediaQuery('(max-width: 500px)')
 
-  if(isLargeScreen){
-    overflow_length=5;
+  if (isLargeScreen) {
+    overflow_length = 5;
   }
-  if(isSmallScreen){
-    overflow_length=1;
+  if (isSmallScreen) {
+    overflow_length = 1;
   }
 
   return (

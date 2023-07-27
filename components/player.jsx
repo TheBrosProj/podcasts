@@ -24,11 +24,11 @@ const AudioPlayer = () => {
     title,
     artist,
     active,
+    hidePlayer
   } = useAudioPlayer();
 
 
   useEffect(() => {
-    // Handle pausing and resuming audio when navigating between pages
     const handleRouteChange = () => {
       if (isPlaying && isLoaded) {
         audioRef.current.pause();
@@ -88,7 +88,9 @@ const AudioPlayer = () => {
   };
 
   return (
-    <Box bg="gray.200" p={4} position="fixed" bottom={0} left={0} right={0}>
+    <>
+    { !hidePlayer &&
+    <Box h={'36'} m={4} bg="gray.200" opacity={'0.96'} p={4} position="fixed" bottom={0} left={0} right={0} borderRadius={'3xl'}>
       <audio
         ref={audioRef}
         src={'../Hello.m4a'}
@@ -118,11 +120,12 @@ const AudioPlayer = () => {
           <SliderTrack>
             <SliderFilledTrack bg="grey" />
           </SliderTrack>
-            <SliderThumb boxSize={6} />
+          <SliderThumb boxSize={6} />
         </Slider>
         <IconButton ml={4} icon={<FontAwesomeIcon icon={faVolumeUp} />} aria-label="Volume Up" />
       </Flex>
-    </Box>
+    </Box> }
+    </>
   );
 };
 

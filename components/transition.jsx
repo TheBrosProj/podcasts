@@ -1,70 +1,25 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/router';
+import React from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
-const variants = {
-    scaleDown: {
-        scale: 0.75,
-        y: 100,
-        transition: {
-            duration: 0.1
-        }
-    },
-    out: {
-        x: "-100%",
-        transition: {
-            duration: 0.1,
-            delay: 0.25
-        }
-    },
-    in: {
-        scale: 0.75,
-        y: 100,
-        x: "100%",
-        transition: {
-            duration: 0.1
-        }
-    },
-    center: {
-        x: 0,
-        scale: 0.75,
-        transformOrigin: 'top',
-        transition: {
-            duration: 0.1
-        }
-    },
-    scaleUp: {
-        scale: 1,
-        y: 0,
-        transition: {
-            duration: 0.1,
-            delay: 0.25
-        }
-    },
-};
+export const AnimatedComponent = ({ children }) => {
+    const variants = {
+        hidden: {
+            y: '100%', // Start position, hidden below the screen
+            opacity: 0,
+        },
+        visible: {
+            y: 0, // End position, at the top of the screen
+            opacity: 1,
+        },
+    };
 
-const TransitionDiv = ({ children }) => {
-    const { asPath } = useRouter();
     return (
-        <div className="effect"
-            style={{
-                overflow: 'hidden'
-            }}>
-            <AnimatePresence
-                initial={false}
-                mode='wait'
-            >
-                <motion.div
-                    key={asPath}
-                    variants={variants}
-                    initial="in"
-                    animate={["center", "scaleUp"]}
-                    exit={["scaleDown", "out"]}
-                >
+        <AnimatePresence>
+            <motion.div initial="hidden" animate="visible" variants={variants}>
                     {children}
-                </motion.div>
-            </AnimatePresence>
-        </div>
+            </motion.div>
+        </AnimatePresence>
     );
 };
 
-export default TransitionDiv;
+export default AnimatedComponent;

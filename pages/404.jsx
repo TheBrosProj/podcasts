@@ -1,12 +1,15 @@
+import { Button, Center, Heading, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 
 export default function FourOhFour() {
   return (
-    <div style={{textAlign : 'center' , padding : '30vh 30vw'}}>
-      <h1>404 - Page Not Found</h1>
-      <Link href="/">
+    <Center display={'grid'} my={'256'}>
+      <Heading>404 - Page Not Found</Heading>
+      {/* <Link href="/">
+        <Button as={Text}>
         Go back home
-      </Link>
-    </div>
+        </Button>
+      </Link> */}
+    </Center>
   )
 }

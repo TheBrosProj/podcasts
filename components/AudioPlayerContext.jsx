@@ -12,6 +12,7 @@ export const AudioPlayerProvider = ({ children }) => {
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
   const [activeId, setActiveId] = useState(0);
+  const [hidePlayer,setHidePlayer] = useState(false);
 
   return (
     <AudioPlayerContext.Provider
@@ -33,7 +34,9 @@ export const AudioPlayerProvider = ({ children }) => {
         artist,
         setArtist,
         activeId,
-        setActiveId
+        setActiveId,
+        hidePlayer,
+        setHidePlayer,
       }}
     >
       {children}
