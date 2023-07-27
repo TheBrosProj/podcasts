@@ -5,30 +5,31 @@ import { useSearch } from './SearchContext';
 import CardShowcase from './cards';
 import { useRouter } from 'next/router';
 
-const SearchBar = () => {
+const SearchBar = ({autoFocus = true}) => {
   const { searchTerm, setSearchTerm, searchResults, loading } = useSearch();
   const router = useRouter();
   const handleSearch = (value) => {
     setSearchTerm(value);
     if(value != ""){
-    router.push(value);
-  }
-  else{
+    router.push('/search/'+value);
+    }
+    else{
     router.push("/")
-  }
+    }
   }
 
   return (
     <>
-      <Center ml={'4'}>
-        <Box position="relative" width="lg" mt="4" mr="4">
+      <Center ml={'8'}>
+        <Box position="relative" width="lg">
           <form>
             <InputGroup>
               <Input
-                autoFocus={true}
                 type="text"
                 placeholder="Search for podcasts"
                 value={searchTerm}
+                autoFocus={autoFocus}
+                // onFocus={handleFocus}
                 onChange={(event) => handleSearch(event.target.value)}
               />
               <InputRightElement width="4.5rem">
@@ -45,7 +46,7 @@ const SearchBar = () => {
           </form>
         </Box>
       </Center>
-      {searchTerm !== '' && (
+      {searchTerm != "" && (
         <Box>
           <Heading textAlign="center" as="h1" size="xl" mt={'4'}>
             Search Results

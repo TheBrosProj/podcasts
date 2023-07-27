@@ -1,45 +1,40 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useAuth } from '../lib/useAuth';
+import { Flex, Heading, Input, Button } from '@chakra-ui/react';
+import { auth } from '../lib/firebase';
 
-export default function LoginPage() {
+const Login = () => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const router = useRouter();
-  const auth = useAuth();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleLogin = async () => {
     try {
-      await auth.signIn(email, password);
+      await auth.signInWithEmailAndPassword(email, password);
       router.push('/');
     } catch (error) {
-      setError(error.message);
+      console.error('Error logging in:', error);
     }
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      {error && <p>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-        <label htmlFor="password">Password</label>
-        <input
+    <Flex align="center" justify="center" height="100vh">
+      <Flex direction="column" p={8} rounded="md" shadow="md">
+        <Heading mb={4}>Login</Heading>
+        <Input placeholder="Email" mb={4} value={email} onChange={(e) => setEmail(e.target.value)} />
+        <Input
           type="password"
-          id="password"
+          placeholder="Password"
+          mb={4}
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Login</button>
-      </form>
-    </div>
+        <Button colorScheme="blue" onClick={handleLogin}>
+          Login
+        </Button>
+      </Flex>
+    </Flex>
   );
-}
+};
+
+export default Login;

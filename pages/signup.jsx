@@ -1,75 +1,40 @@
-import { useState } from 'react'
-import { auth } from '@/lib/firebase'
-import { useRouter } from 'next/router'
-import { createUserWithEmailAndPassword } from "firebase/auth"
-import Link  from 'next/link'
-
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { Flex, Heading, Input, Button } from '@chakra-ui/react';
+import { auth } from '../lib/firebase';
 
 const Signup = () => {
-  const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState(null)
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleSignup = async (event) => {
-    event.preventDefault()
-
+  const handleSignup = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-        const uid = userCredential.user.uid;
-        router.push('/')
-      })
+      await auth.createUserWithEmailAndPassword(email, password);
+      router.push('/');
     } catch (error) {
-      setError(error.message)
+      console.error('Error signing up:', error);
     }
-  }
-  const handleGoogleSignIn = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider).then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        router.push('/')
-      })
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      const email = error.customData.email;
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      setError(errorMessage)
-    }
-  }
+  };
 
   return (
-    <div>
-      <form className='form' onSubmit={handleSignup}>
-        <div>
-          <label htmlFor="email">Email</label><br></br>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label><br></br>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
-        <button type="submit">Sign Up</button><br></br>Already signed in ?
-      <Link role="button" className="fancy-button"href="/login"><button>Log In</button></Link>or
-      <button onClick={handleGoogleSignIn}>Sign in with Google</button>
-      </form>
-      {error && <p>{error}</p>}
-    </div>
-  )
-}
+    <Flex align="center" justify="center" height="100vh">
+      <Flex direction="column" p={8} rounded="md" shadow="md">
+        <Heading mb={4}>Signup</Heading>
+        <Input placeholder="Email" mb={4} value={email} onChange={(e) => setEmail(e.target.value)} />
+        <Input
+          type="password"
+          placeholder="Password"
+          mb={4}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button colorScheme="green" onClick={handleSignup}>
+          Signup
+        </Button>
+      </Flex>
+    </Flex>
+  );
+};
 
-export default Signup
+export default Signup;

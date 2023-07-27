@@ -2,6 +2,8 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSearch } from '@/components/SearchContext'; // Update the path
+import CardShowcase from '@/components/cards'; // Update the path
+import { Center, Heading, Text } from '@chakra-ui/react';
 import SearchBar from '@/components/search';
 import NavBar from '@/components/navbar';
 import Footer from '@/components/footer';

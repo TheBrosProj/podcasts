@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Box, IconButton, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Flex, Text } from '@chakra-ui/react';
+import { useState, useRef, useEffect } from 'react';
+import { Box, IconButton, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Flex, Text, SliderMark } from '@chakra-ui/react';
 import { faPlay, faPause, faUndoAlt, faRedoAlt, faVolumeDown, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAudioPlayer } from './AudioPlayerContext';
@@ -26,6 +26,7 @@ const AudioPlayer = () => {
     active,
   } = useAudioPlayer();
 
+
   useEffect(() => {
     // Handle pausing and resuming audio when navigating between pages
     const handleRouteChange = () => {
@@ -46,6 +47,7 @@ const AudioPlayer = () => {
   // const [volume, setVolume] = useState(100);
 
   const handlePlayPause = () => {
+
     if (isPlaying) {
       audioRef.current.pause();
     } else {
@@ -55,9 +57,9 @@ const AudioPlayer = () => {
     handleDurationChange();
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(active);
-  },[active])
+  }, [active])
 
   const handleBackward = () => {
     audioRef.current.currentTime -= 10;
@@ -98,10 +100,11 @@ const AudioPlayer = () => {
         <IconButton icon={<FontAwesomeIcon icon={faRedoAlt} />} aria-label="Forward 10s" onClick={handleForward} />
       </Flex>
       <Flex align="center" justify="space-between" mt={2}>
+
         <Text mr={4}>{formatTime(currentTime)}</Text>
-        <Slider flex={1} value={currentTime} max={duration} onChange={handleTimeSeek}>
+        <Slider focusThumbOnChange={false} key={active} flex={1} value={currentTime} max={duration} onChange={handleTimeSeek}>
           <SliderTrack>
-            <SliderFilledTrack bg="blue.500" />
+            <SliderFilledTrack bg="grey" />
           </SliderTrack>
           <SliderThumb boxSize={6} />
         </Slider>
@@ -109,11 +112,13 @@ const AudioPlayer = () => {
       </Flex>
       <Flex align="center" mt={2}>
         <IconButton mr={4} icon={<FontAwesomeIcon icon={faVolumeDown} />} aria-label="Volume Down" />
-        <Slider flex={1} value={volume} onChange={handleVolumeSeek}>
+        <Slider flex={1} value={volume}
+          onChange={handleVolumeSeek}
+        >
           <SliderTrack>
-            <SliderFilledTrack bg="blue.500" />
+            <SliderFilledTrack bg="grey" />
           </SliderTrack>
-          <SliderThumb boxSize={6} />
+            <SliderThumb boxSize={6} />
         </Slider>
         <IconButton ml={4} icon={<FontAwesomeIcon icon={faVolumeUp} />} aria-label="Volume Up" />
       </Flex>

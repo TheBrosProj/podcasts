@@ -1,4 +1,3 @@
-import { getAllPodcasts } from '../lib/db';
 import CardShowcase from './cards';
 import { useEffect, useState } from 'react';
 import axios from 'axios';

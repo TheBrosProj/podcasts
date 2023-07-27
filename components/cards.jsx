@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Box, Image, Heading, Text, Flex, IconButton, useMediaQuery } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faArrowLeft, faPlay } from '@fortawesome/free-solid-svg-icons';
-import TransitionDiv from '../components/transition';
+import TransitionDiv from '@/components/transition';
 import Head from 'next/head';
 import { useAudioPlayer } from './AudioPlayerContext';
 

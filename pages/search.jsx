@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSearch } from '@/components/SearchContext'; // Update the path
+import { Center, Heading, Text } from '@chakra-ui/react';
 import SearchBar from '@/components/search';
 import NavBar from '@/components/navbar';
 import Footer from '@/components/footer';
@@ -20,6 +21,7 @@ const SearchResultsPage = () => {
     <>
     <NavBar></NavBar>
     <SearchBar></SearchBar>
+    <Center h={'lg'}><Heading>Try searching something</Heading></Center>
     <Footer></Footer>
     </>
   );

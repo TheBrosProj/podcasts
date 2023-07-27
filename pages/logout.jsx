@@ -1,19 +1,26 @@
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useAuth } from '../lib/useAuth';
+import { auth } from '@/lib/firebase';
 
-export default function LogoutPage() {
+const Logout = () => {
   const router = useRouter();
-  const auth = useAuth();
 
-  const handleLogout = async () => {
-    await auth.signOut();
-    router.push('/login');
-  };
+  useEffect(() => {
+    // Function to handle logout
+    const handleLogout = async () => {
+      try {
+        await auth.signOut();
+        router.push('/'); // Redirect to homepage after successful logout
+      } catch (error) {
+        console.error('Error logging out:', error);
+      }
+    };
 
-  return (
-    <div>
-      <h1>Logout</h1>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
-  );
-}
+    // Call the handleLogout function when the component mounts
+    handleLogout();
+  }, []);
+
+  return null; // No content to render, just handling logout
+};
+
+export default Logout;
