@@ -144,19 +144,6 @@ export default function UploadForm() {
           </Box>
         )}
       </Box>
-      <Footer></Footer>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
     </Center>
   );
 }
