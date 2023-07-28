@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Flex, Heading, Input, Button } from '@chakra-ui/react';
 import { auth } from '../lib/firebase';
+import { useAudioPlayer } from '../components/AudioPlayerContext';
 
 const Login = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
 
   const handleLogin = async () => {
     try {
@@ -18,7 +20,7 @@ const Login = () => {
   };
 
   return (
-    <Flex align="center" justify="center" height="100vh">
+    <Flex align="center" justify="center" mt={'32'} mb={'48'}>
       <Flex direction="column" p={8} rounded="md" shadow="md">
         <Heading mb={4}>Login</Heading>
         <Input placeholder="Email" mb={4} value={email} onChange={(e) => setEmail(e.target.value)} />

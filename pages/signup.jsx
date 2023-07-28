@@ -18,7 +18,7 @@ const Signup = () => {
   };
 
   return (
-    <Flex align="center" justify="center" height="100vh">
+    <Flex align="center" justify="center" mt={'32'} mb={'48'}>
       <Flex direction="column" p={8} rounded="md" shadow="md">
         <Heading mb={4}>Signup</Heading>
         <Input placeholder="Email" mb={4} value={email} onChange={(e) => setEmail(e.target.value)} />

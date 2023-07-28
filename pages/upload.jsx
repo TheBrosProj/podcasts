@@ -10,10 +10,7 @@ import {
   Progress,
   Center,
   useToast,
-  Flex,
-  ChakraProvider,
 } from '@chakra-ui/react';
-import Footer from '@/components/footer';
 
 export default function UploadForm() {
   // const [file, setFile] = useState(null);

@@ -1,9 +1,11 @@
 import type { AppProps } from 'next/app'
 import '@/styles/globals.css'
-import { ChakraProvider } from '@chakra-ui/react'
-import { AudioPlayerProvider } from '@/components/AudioPlayerContext'
+import { Box, ChakraProvider } from '@chakra-ui/react'
 import { SearchProvider } from '@/components/SearchContext'
+import { AudioPlayerProvider } from '@/components/AudioPlayerContext'
+import NavBar from '../components/navbar';
 import Player from '@/components/player';
+import Footer from '@/components/footer';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -11,7 +13,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <ChakraProvider>
         <AudioPlayerProvider>
           <SearchProvider>
-          <Component {...pageProps} />
+              <NavBar />
+              <Component {...pageProps} />
+              <Footer />
           </SearchProvider>
           {/* <Player></Player> */}
         </AudioPlayerProvider>
