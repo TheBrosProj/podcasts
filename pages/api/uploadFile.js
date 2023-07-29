@@ -31,8 +31,7 @@ export default async function handler(req, res) {
       return;
     }
     const { file, body: metadata } = req;
-    console.log(file)
-    console.log(metadata)
+
     const uploadStream = bucket.openUploadStream(file.originalname, { metadata });
 
     uploadStream.end(file.buffer);
@@ -44,4 +43,3 @@ export default async function handler(req, res) {
     });
   });
 }
-
