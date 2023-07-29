@@ -29,38 +29,43 @@ export default function UploadForm() {
   };
 
   const handleUpload = async () => {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('title',title);
-    formData.append('artist',artist);
-    formData.append('image',imageUrl);
-    formData.append('description',description);
-    const data =  {
-      method: 'POST',
-      body: formData,
-    }
-    const response = await fetch('/api/addPodcast',data);
-    // const data = { title, artist, image: imageUrl, description };
-    // console.log(data);
-    // const response = await axios.post('/api/addPodcast', data);
-    // console.log(response)
-    if(response.status == 200){
-    toast({
-      title: 'Success',
-      description: response.data.message,
-      status: 'success',
-      duration: 9000,
-      isClosable: true,
-    });}
-    else{
+    if (file!=null){
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('title',title);
+      formData.append('artist',artist);
+      formData.append('image',imageUrl);
+      formData.append('description',description);
+      const data =  {
+        method: 'POST',
+        body: formData,
+      }
+      const response = await fetch('/api/addPodcast',data);
+      // const data = { title, artist, image: imageUrl, description };
+      // console.log(data);
+      // const response = await axios.post('/api/addPodcast', data);
+      console.log(response)
+      if(response.status == 200){
       toast({
-        title: 'Error',
-        description: response.data.message,
-        status: 'error',
+        title: 'Success',
+        // description: response.data.message,
+        status: 'success',
         duration: 9000,
         isClosable: true,
-      });
+      });}
+      else{
+        toast({
+          title: 'Error',
+          // description: response.data.message,
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    }else{
+      console.log("File Empty")
     }
+    
   };
 
   //only for testing
