@@ -26,7 +26,6 @@ export default function UploadForm() {
 
   const handleFileChange = async (event) => {
     file = (event.target.files[0]);
-    console.log(response);
   };
 
   const handleUpload = async () => {
