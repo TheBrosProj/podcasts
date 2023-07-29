@@ -11,7 +11,7 @@ export const AudioPlayerProvider = ({ children }) => {
   const [picture, setPicture] = useState('');
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
-  const [activeId, setActiveId] = useState(0);
+  const [activeId, setActiveId] = useState('');
   const [hidePlayer,setHidePlayer] = useState(false);
 
   return (

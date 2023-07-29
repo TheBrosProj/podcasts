@@ -16,11 +16,11 @@ const SearchProvider = ({ children }) => {
         .then((response) => {
           setSearchResults(
             response.data.map((result) => ({
-              _id: result._id,
-              title: result.title,
-              desc: result.description,
-              aName: result.artist,
-              img: result.image,
+              _id: result._id.toString(),
+              title: result.metadata.title,
+              desc: result.metadata.description,
+              aName: result.metadata.artist,
+              img: result.metadata.image,
             }))
           );
         })

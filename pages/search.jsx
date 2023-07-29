@@ -10,13 +10,15 @@ const SearchResultsPage = () => {
   const { searchResults, loading, setSearchTerm } = useSearch();
 
   useEffect(() => {
-    setSearchTerm(slug);
+    if (slug !== null) {
+      setSearchTerm(slug);
+    }
   }, [slug]);
 
   return (
     <>
-    <SearchBar></SearchBar>
-    <Center h={'lg'}><Heading>Try searching something</Heading></Center>
+      <SearchBar></SearchBar>
+      <Center h={'lg'}><Heading>Try searching something</Heading></Center>
     </>
   );
 };

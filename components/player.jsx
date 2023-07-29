@@ -24,9 +24,35 @@ const AudioPlayer = () => {
     title,
     artist,
     active,
+    activeId,
     hidePlayer
   } = useAudioPlayer();
 
+  useEffect(()=>{
+    console.log("gg")
+    console.log(activeId)
+    if (activeId!=''){
+      const handleGetPodcast = async () => {
+        try {
+          const response = await fetch(`/api/getFile?fileId=${activeId}`);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+    
+          const blob = await response.blob();
+          const objectURL = URL.createObjectURL(blob);
+
+          audioRef.current.src = objectURL;
+          audioRef.current.play();
+          setIsPlaying(true);
+        } catch (error) {
+          console.error('Error loading audio:', error);
+          // Handle error, display an error message, etc.
+        }
+      };
+      handleGetPodcast();
+    }
+  },[activeId]);
 
   useEffect(() => {
     const handleRouteChange = () => {
