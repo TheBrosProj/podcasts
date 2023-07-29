@@ -2,17 +2,19 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Flex, Heading, Input, Button } from '@chakra-ui/react';
 import { auth } from '../lib/firebase';
-import { useAudioPlayer } from '../components/AudioPlayerContext';
+import { useAuth } from '../components/AuthContext';
 
 const Login = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { setUser } = useAuth(); 
 
 
   const handleLogin = async () => {
     try {
       await auth.signInWithEmailAndPassword(email, password);
+      setUser(auth.currentUser);
       router.push('/');
     } catch (error) {
       console.error('Error logging in:', error);

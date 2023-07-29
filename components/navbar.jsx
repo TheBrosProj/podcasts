@@ -2,12 +2,14 @@ import { Box, Button, Flex, IconButton, Text } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPodcast } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link';
-import { auth } from '../lib/firebase'
-import AnimatedComponent from '@/components/transition'
+import { useAuth } from './AuthContext';
+
 
 
 export default function NavBar() {
-    const user = auth.currentUser;
+    const { user } = useAuth(); 
+    console.log(user);
+    // SetUser(auth.currentUser);
 
     return (
         <>
@@ -17,17 +19,16 @@ export default function NavBar() {
                         <IconButton
                             as={Text}
                             icon={<FontAwesomeIcon href='/' icon={faPodcast} />}
-                            color="grey"
-                            fontSize="xl"
+                            color="white"
+                            fontSize="3xl"
                             aria-label="Podcasts"
-                            _hover={{ color: 'black' }}
                         />
                     </Link>
-                    <Box ml="1rem" fontSize="2xl" fontWeight="bold" color="black">
+                    <Box ml="1rem" fontSize="2xl" fontWeight="bold">
                         Podcasts
                     </Box>
                 </Flex>
-                {user === null ?
+                {user == null ?
                     <Flex>
                         <Link href={'/login'}>
                             <Button as={Text} mr={'4'}>Log In</Button>

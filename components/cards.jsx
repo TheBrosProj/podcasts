@@ -9,8 +9,10 @@ export const Card = ({ _id, title, desc, aName, img }) => {
   return (
     <Box
       pos={'relative'}
+      borderColor={'gray'}
       borderWidth="1px"
       borderRadius="lg"
+      _hover={{ borderColor: 'white', boxShadow: '0 0 12px 10px gray' }}
       overflow="hidden"
       boxShadow="md"
       w="xs"
@@ -25,18 +27,18 @@ export const Card = ({ _id, title, desc, aName, img }) => {
 
           {aName}
         </Heading>
-        <Text color="gray.600">
+        <Text>
           {desc}
         </Text>
       </Box>
       <Box display="flex" justifyContent="center" alignItems="center">
         <IconButton
+          borderWidth={'2px'}
+          borderColor={'gray'}
           position={'absolute'}
           bottom={'4'}
           icon={<FontAwesomeIcon icon={faPlay} />}
           borderRadius="50%"
-          bg="gray.200"
-          color="gray.600"
           fontSize="lg"
           onClick={() => setActiveId(_id)}
         />
@@ -80,8 +82,6 @@ const CardShowcase = ({ active, items, col }) => {
       <IconButton
         icon={<FontAwesomeIcon icon={faArrowLeft} />}
         borderRadius="50%"
-        bg="gray.200"
-        color="gray.600"
         fontSize="lg"
         onClick={handleLeftArrowClick}
         isDisabled={!canScrollLeft}
@@ -93,8 +93,6 @@ const CardShowcase = ({ active, items, col }) => {
       <IconButton
         icon={<FontAwesomeIcon icon={faArrowRight} />}
         borderRadius="50%"
-        bg="gray.200"
-        color="gray.600"
         fontSize="lg"
         onClick={handleRightArrowClick}
         isDisabled={!canScrollRight}
