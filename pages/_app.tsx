@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <Component {...pageProps} />
               <Footer />
           </SearchProvider>
-          {/* <Player></Player> */}
+          <Player></Player>
         </AudioPlayerProvider>
       </ChakraProvider>
     </>

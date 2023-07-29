@@ -26,6 +26,10 @@ export default function UploadForm() {
 
   const handleFileChange = async (event) => {
     file = (event.target.files[0]);
+    console.log(response);
+  };
+
+  const handleUpload = async () => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('title',title);
@@ -36,15 +40,11 @@ export default function UploadForm() {
       method: 'POST',
       body: formData,
     }
-    const response = await fetch('/api/uploadFile',data);
-    console.log(response);
-  };
-
-  const handleUpload = async () => {
-    const data = { title, artist, image: imageUrl, description };
-    console.log(data);
-    const response = await axios.post('/api/addPodcast', data);
-    console.log(response)
+    const response = await fetch('/api/addPodcast',data);
+    // const data = { title, artist, image: imageUrl, description };
+    // console.log(data);
+    // const response = await axios.post('/api/addPodcast', data);
+    // console.log(response)
     if(response.status == 200){
     toast({
       title: 'Success',
@@ -64,27 +64,28 @@ export default function UploadForm() {
     }
   };
 
-  const handleGetPodcast = async () => {
-    // if (!id) return;
-    // const response = await axios.post('/api/searchPodcasts', { searchTerm: id });
-    // console.log(response.data);
-    try {
-      const response = await fetch(`/api/getFile?fileId=${id}`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+  //only for testing
+  // const handleGetPodcast = async () => {
+  //   // if (!id) return;
+  //   // const response = await axios.post('/api/searchPodcasts', { searchTerm: id });
+  //   // console.log(response.data);
+  //   try {
+  //     const response = await fetch(`/api/getFile?fileId=${id}`);
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
 
-      const blob = await response.blob();
-      const objectURL = URL.createObjectURL(blob);
+  //     const blob = await response.blob();
+  //     const objectURL = URL.createObjectURL(blob);
 
-      audioPlayer.src = objectURL;
-      audioPlayer.play();
-    } catch (error) {
-      console.error('Error loading audio:', error);
-      // Handle error, display an error message, etc.
-    }
+  //     audioPlayer.src = objectURL;
+  //     audioPlayer.play();
+  //   } catch (error) {
+  //     console.error('Error loading audio:', error);
+  //     // Handle error, display an error message, etc.
+  //   }
 
-  };
+  // };
 
   return (
     <Center minHeight="100vh">
@@ -120,29 +121,6 @@ export default function UploadForm() {
           Upload
         </Button>
         <Progress value={progress} max={100} mb={4} />
-        <Heading as="h2" mb={4}>
-          Get Podcast
-        </Heading>
-        <FormControl mb={4}>
-          <FormLabel>Podcast ID</FormLabel>
-          <Input type="text" value={id} onChange={(event) => setId(event.target.value)} />
-        </FormControl>
-        <Button colorScheme="teal" onClick={handleGetPodcast} mb={4}>
-          Get Podcast
-        </Button>
-        <audio id="audioPlayer" controls src="" />
-        {podcast && (
-          <Box>
-            {/* <Heading as="h3" mb={2}>
-              {podcast.title}
-            </Heading>
-            <p>{podcast.description}</p>
-            <p>{podcast.artist}</p>
-            <audio  controls>
-              <source src="" type="audio/mpeg">
-            </audio> */}
-          </Box>
-        )}
       </Box>
     </Center>
   );

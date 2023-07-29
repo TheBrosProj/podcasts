@@ -16,13 +16,13 @@ export default async function searchPodcasts(req, res) {
 
       // Get a reference to the podcast collection
       const db = client.db(dbName);
-      const podcastCollection = db.collection('fs.file');
+      const podcastCollection = db.collection('fs.files');
 
       // Create a regular expression to search for the searchTerm in the title field
       const searchRegex = new RegExp(searchTerm, 'i');
 
       // Find all podcasts with a title that matches the search term
-      const podcasts = await podcastCollection.find({ metadata: {title:searchRegex} }).toArray();
+      const podcasts = await podcastCollection.find({'metadata.title':searchRegex}).toArray();
 
       res.status(200).json(podcasts);
     } catch (err) {

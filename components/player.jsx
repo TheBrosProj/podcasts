@@ -24,9 +24,35 @@ const AudioPlayer = () => {
     title,
     artist,
     active,
+    activeId,
     hidePlayer
   } = useAudioPlayer();
 
+  useEffect(()=>{
+    console.log("gg")
+    console.log(activeId)
+    if (activeId!=''){
+      const handleGetPodcast = async () => {
+        try {
+          const response = await fetch(`/api/getFile?fileId=${activeId}`);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+    
+          const blob = await response.blob();
+          const objectURL = URL.createObjectURL(blob);
+
+          audioRef.current.src = objectURL;
+          audioRef.current.play();
+          setIsPlaying(true);
+        } catch (error) {
+          console.error('Error loading audio:', error);
+          // Handle error, display an error message, etc.
+        }
+      };
+      handleGetPodcast();
+    }
+  },[activeId]);
 
   useEffect(() => {
     const handleRouteChange = () => {
@@ -54,7 +80,6 @@ const AudioPlayer = () => {
       audioRef.current.play();
     }
     setIsPlaying(!isPlaying);
-    handleDurationChange();
   };
 
   useEffect(() => {
@@ -92,6 +117,7 @@ const AudioPlayer = () => {
     { !hidePlayer &&
     <Box h={'36'} m={4} bg="gray.200" opacity={'0.96'} p={4} position="fixed" bottom={0} left={0} right={0} borderRadius={'3xl'}>
       <audio
+        onDurationChange={handleDurationChange}
         ref={audioRef}
         src={'../Hello.m4a'}
         onTimeUpdate={handleTimeUpdate}
