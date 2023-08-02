@@ -1,5 +1,5 @@
 import '@/styles/globals.css'
-import { ChakraProvider , extendTheme, withDefaultColorScheme ,useColorMode } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme, withDefaultColorScheme } from '@chakra-ui/react'
 import { SearchProvider } from '@/components/SearchContext'
 import { AudioPlayerProvider } from '@/components/AudioPlayerContext'
 import NavBar from '@/components/navbar';
@@ -43,14 +43,14 @@ export default function App({ Component, pageProps }) {
     <>
       <ChakraProvider theme={theme}>
         <AuthProvider>
-        <AudioPlayerProvider>
-          <SearchProvider>
-            <NavBar />
-            <Component {...pageProps} />
-            <Footer />
-          </SearchProvider>
-          <Player></Player>
-        </AudioPlayerProvider>
+          <AudioPlayerProvider>
+            <SearchProvider>
+              <NavBar />
+              <Component {...pageProps} />
+              <Footer />
+            </SearchProvider>
+            <Player></Player>
+          </AudioPlayerProvider>
         </AuthProvider>
       </ChakraProvider>
     </>
