@@ -6,13 +6,13 @@ import { Box, Heading, SimpleGrid } from '@chakra-ui/react';
 var items = [
   {
     _id: 1,
-    title: 'Card 1', aName: 'Nandan Varma',
+    title: 'Card 1', aName: 'TheBrosProj Team',
     img: 'https://picsum.photos/200',
     desc: 'This is the first card',
   },
   {
     _id: 2,
-    title: 'Card 2', aName: 'Nandan Varma',
+    title: 'Card 2', aName: 'TheBrosProj Team',
     img: 'https://picsum.photos/200',
     desc: 'This is the second card',
   },
