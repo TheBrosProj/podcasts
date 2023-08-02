@@ -1,7 +1,6 @@
 import CardShowcase from './cards';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Box, Heading, SimpleGrid } from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 
 var items = [
   {
