@@ -22,7 +22,7 @@ const theme = extendTheme(
     },
   },
   withDefaultColorScheme({
-    colorScheme: 'customScheme',
+    colorScheme: 'dark',
     components: ['Button'],
     light: {
       bg: 'black',
@@ -36,8 +36,6 @@ const theme = extendTheme(
 );
 
 export default function App({ Component, pageProps }) {
-
-  // const { colorMode, toggleColorMode } = useColorMode()
 
   return (
     <>

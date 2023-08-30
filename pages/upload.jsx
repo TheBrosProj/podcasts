@@ -41,10 +41,7 @@ export default function UploadForm() {
         body: formData,
       }
       const response = await fetch('/api/addPodcast',data);
-      // const data = { title, artist, image: imageUrl, description };
-      // console.log(data);
-      // const response = await axios.post('/api/addPodcast', data);
-      console.log(response)
+      console.log(response);
       if(response.status == 200){
       toast({
         title: 'Success',
@@ -67,29 +64,6 @@ export default function UploadForm() {
     }
     
   };
-
-  //only for testing
-  // const handleGetPodcast = async () => {
-  //   // if (!id) return;
-  //   // const response = await axios.post('/api/searchPodcasts', { searchTerm: id });
-  //   // console.log(response.data);
-  //   try {
-  //     const response = await fetch(`/api/getFile?fileId=${id}`);
-  //     if (!response.ok) {
-  //       throw new Error('Network response was not ok');
-  //     }
-
-  //     const blob = await response.blob();
-  //     const objectURL = URL.createObjectURL(blob);
-
-  //     audioPlayer.src = objectURL;
-  //     audioPlayer.play();
-  //   } catch (error) {
-  //     console.error('Error loading audio:', error);
-  //     // Handle error, display an error message, etc.
-  //   }
-
-  // };
 
   return (
     <Center minHeight="100vh">
